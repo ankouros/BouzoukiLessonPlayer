@@ -97,6 +97,19 @@ issues and technical follow‑ups.
 - Application logs live in `bouzouki_player.log` with rotation, which
   can help diagnose scanning or playback issues.
 
+### Local-only metadata and cleanup guidance
+
+- Several folders and documents are deliberately kept out of the shared
+  repository to avoid leaking large media bundles or personal notes:
+  `Downloads/`, `Zips/`, `specs/`, `AGENTS.md`, `CONTRACTS.md`,
+  `REVIEW.md`, `ROADMAP.md`, and `OPEN-ISSUES.mg` are ignored via
+  `.gitignore`.  Your local `lessons.db` and any other `*.db` files stay
+  on disk but are never tracked upstream.
+- If a file accidentally landed in the index, use
+  `git rm --cached <path>` and commit the removal; this preserves your
+  working copy while expunging it from the remote history.  After the
+  commit, the `.gitignore` entry keeps the file untracked going forward.
+
 ## Getting Started
 
 ### Requirements
