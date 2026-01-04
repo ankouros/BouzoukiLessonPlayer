@@ -50,7 +50,9 @@ core
 *.tar.gz
 
 # Local folders and metadata
+Downloads
 Downloads/
 Zips/
+specs/
 AGENTS.md
 CONTRACTS.md
