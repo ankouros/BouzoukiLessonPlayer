@@ -49,3 +49,8 @@ core
 *.tar
 *.tar.gz
 
+# Local folders and metadata
+Downloads/
+Zips/
+AGENTS.md
+CONTRACTS.md
