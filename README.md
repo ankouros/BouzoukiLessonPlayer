@@ -10,7 +10,7 @@ PyQt5.
 Current behaviour based on the codebase:
 
 - **Lesson library backed by SQLite**  
-  - Lessons are stored in `lessons.db` in a `lessons` table with
+  - Lessons are stored in a local SQLite database in a `lessons` table with
     `lesson_number`, `lesson_name`, `file_name`, `file_path`,
     `duration`, and `bitrate` columns (`core/database.py`,
     `core/database_manager.py`).  
@@ -59,24 +59,24 @@ Current behaviour based on the codebase:
     the selection.
 - **Metronome and groove tools**  
   - `metronome/metronome.py` implements a polyrhythmic metronome with
-    presets, custom grooves persisted in `metronome/grooves.json`, and
+    presets, custom grooves persisted in a local groove definition file, and
     animated LED-style visual feedback.  
   - `metronome/tap.py` allows tapping rhythms to create new grooves,
     which are merged into existing groove files.
 
-See `ROADMAP.md` for planned work and `OPEN-ISSUES.mg` for known
-issues and technical follow‑ups.
+See the project roadmap and open-issues documentation for planned
+work, known issues, and technical follow‑ups.
 
 ### How scanning and storage work
 
-- The media library is stored in a local SQLite database at
-  `lessons.db` (see `core/database.py`, `core/database_manager.py`).  
+- The media library is stored in a local SQLite database (see
+  `core/database.py`, `core/database_manager.py`).  
 - Scans are initiated from the **Search Media** action, which opens
   the `FolderScannerWindow` (`ui/searchUpdateDatabase.py`):  
   - You choose one or more root folders to scan; these are stored in
     the `folders` table for easy reuse.  
-  - The scanner walks the selected folder, ignoring any directory
-    named `Downloads`.  
+  - The scanner walks the selected folder, ignoring system download
+    folders.  
   - Supported media files (`.mp4`, `.mkv`, `.mp3`) are imported into
     the `lessons` table with parsed lesson number/name, file name and
     full path, and optional duration/bitrate from `ffprobe`.  
@@ -89,26 +89,13 @@ issues and technical follow‑ups.
 
 ### Backups and safety
 
-- The single most important file is `lessons.db`, which contains the
-  lesson library and practice presets.  
-- You can create a backup simply by copying `lessons.db` while the app
-  is closed; see tests under `tests/test_backup_restore_library.py`
-  for the expected behaviour.  
-- Application logs live in `bouzouki_player.log` with rotation, which
-  can help diagnose scanning or playback issues.
-
-### Local-only metadata and cleanup guidance
-
-- Several folders and documents are deliberately kept out of the shared
-  repository to avoid leaking large media bundles or personal notes:
-  `Downloads/`, `Zips/`, `specs/`, `AGENTS.md`, `CONTRACTS.md`,
-  `REVIEW.md`, `ROADMAP.md`, and `OPEN-ISSUES.mg` are ignored via
-  `.gitignore`.  Your local `lessons.db` and any other `*.db` files stay
-  on disk but are never tracked upstream.
-- If a file accidentally landed in the index, use
-  `git rm --cached <path>` and commit the removal; this preserves your
-  working copy while expunging it from the remote history.  After the
-  commit, the `.gitignore` entry keeps the file untracked going forward.
+- The single most important data store is the application's SQLite
+  database, which contains the lesson library and practice presets.  
+- You can create a backup simply by copying the database file while
+  the app is closed; see tests under
+  `tests/test_backup_restore_library.py` for the expected behaviour.  
+- Application logs are written with rotation to help diagnose scanning
+  or playback issues.
 
 ## Getting Started
 
@@ -148,7 +135,7 @@ cd /path/to/BouzoukiLessonsPlayer
 # Make the installer executable
 chmod +x install.sh
 
-# Run the installer (creates .venv, installs deps, checks ffprobe/VLC)
+# Run the installer (creates a virtual env, installs deps, checks ffprobe/VLC)
 ./install.sh
 ```
 
@@ -158,8 +145,8 @@ If you prefer manual setup:
 sudo apt-get update
 sudo apt-get install -y ffmpeg vlc
 
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv env_bouzouki
+source env_bouzouki/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -174,7 +161,7 @@ cd C:\path\to\BouzoukiLessonsPlayer
 # Allow script execution for this session
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-# Run the installer (creates .venv, installs deps)
+# Run the installer (creates a virtual env, installs deps)
 .\install.ps1
 ```
 
@@ -186,8 +173,8 @@ Manual setup steps (if you prefer):
 
    ```powershell
    cd C:\path\to\BouzoukiLessonsPlayer
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+   python -m venv env_bouzouki
+   .\env_bouzouki\Scripts\Activate.ps1
    python -m pip install --upgrade pip
    python -m pip install -r requirements.txt
    ```
@@ -198,7 +185,7 @@ From the project root (Ubuntu/Debian):
 
 ```bash
 cd /path/to/BouzoukiLessonsPlayer
-source .venv/bin/activate
+source env_bouzouki/bin/activate
 python main.py
 ```
 
@@ -206,17 +193,17 @@ From PowerShell (Windows):
 
 ```powershell
 cd C:\path\to\BouzoukiLessonsPlayer
-.\.venv\Scripts\Activate.ps1
+.\env_bouzouki\Scripts\Activate.ps1
 python main.py
 ```
 
 On startup, the app will:
 
-- Configure logging with rotation to `bouzouki_player.log`.  
+- Configure logging with rotation to an application log file.  
 - Create a `QApplication` and load the saved theme via
   `core.theme_manager.load_theme()`.  
-- Instantiate the main window `ui.main_window.LessonPlayerApp` with
-  `db_path="./lessons.db"`.
+- Instantiate the main window `ui.main_window.LessonPlayerApp` with a
+  configured database path.
 
 ### Pitch-preserving audio (VLC)
 
@@ -251,27 +238,27 @@ If you expect VLC to be active but see `[Qt]` in the status bar:
   ```bash
   which vlc
   which ffprobe
-  source .venv/bin/activate
+  source env_bouzouki/bin/activate
   python -c "import vlc; print('VLC ok:', vlc.Instance() is not None)"
   ```
 
   - If `which vlc` prints nothing, install VLC with
     `sudo apt-get install vlc`.  
-  - If the Python check fails, ensure `python-vlc` is installed in the
-    `.venv` and matches your system VLC.
+  - If the Python check fails, ensure `python-vlc` is installed in your
+    active virtual environment and matches your system VLC.
 
 - On Windows (PowerShell):
 
   ```powershell
   where vlc
-  .\.venv\Scripts\Activate.ps1
+  .\env_bouzouki\Scripts\Activate.ps1
   python -c "import vlc; import vlc as v; print('VLC ok')"
   ```
 
   - If `where vlc` prints nothing, install VLC from
     https://www.videolan.org and ensure it is on your PATH.  
   - If Python cannot import `vlc`, run `python -m pip install python-vlc`
-    inside your `.venv`.
+    inside your active virtual environment.
 
 ## Project Structure
 
@@ -298,18 +285,18 @@ If you expect VLC to be active but see `[Qt]` in the status bar:
     transpose controls, aware of VLC when present.
 - `metronome/` – Metronome logic, groove presets and tapping tools.  
 - `resources/` – Static assets (QSS themes, icons).  
-- `lessons.db` – Local SQLite database with lesson information.  
-- `grooves.json` / `metronome/grooves.json` – Rhythm definitions used
-  by the metronome.
+- Local SQLite database file with lesson information.  
+- Rhythm definition files used by the metronome.
 
 ## Release and Dependency Management
 
 ### Release steps and versioning
 
-This project uses simple, incremental versioning aligned with `ROADMAP.md`
-milestones (e.g. `0.4`, `0.5`, `0.6`). A lightweight release process:
+This project uses simple, incremental versioning aligned with internal
+roadmap milestones (e.g. `0.4`, `0.5`, `0.6`). A lightweight release process:
 
-1. Ensure dependencies are installed in `.venv` and up to date (see
+1. Ensure dependencies are installed in your active virtual environment
+   and up to date (see
    *Dependency review* below).  
 2. Run the full check pipeline locally:
 
@@ -321,9 +308,8 @@ milestones (e.g. `0.4`, `0.5`, `0.6`). A lightweight release process:
 3. Verify the GUI manually:
    - App starts without errors.  
    - Library scanning, playback, metronome, and presets work as expected.  
-4. Update documentation if needed:
-   - `ROADMAP.md` and `OPEN-ISSUES.mg` for what shipped and what remains.  
-   - This `README.md` for any user-visible changes.  
+4. Update documentation if needed for what shipped and what remains,
+   as well as this `README.md` for any user-visible changes.  
 5. Tag the release in your VCS with the roadmap version (e.g. `v0.5.0`)
    and include a short changelog referencing the relevant roadmap items.
 
@@ -335,7 +321,7 @@ regularly, especially before releases:
 1. Activate the virtual environment:
 
    ```bash
-   source .venv/bin/activate
+   source env_bouzouki/bin/activate
    ```
 
 2. Check for outdated packages:
@@ -346,7 +332,7 @@ regularly, especially before releases:
 
 3. For each outdated dependency you choose to upgrade:
    - Update `requirements.txt`.  
-   - Reinstall into `.venv` (e.g. `pip install -r requirements.txt`).  
+   - Reinstall into your virtual environment (e.g. `pip install -r requirements.txt`).  
    - Re-run `make check` and basic GUI smoke checks.
 
 Runtime auto-installs (e.g. `pip install` from inside application code)
@@ -356,19 +342,13 @@ have been removed; any new dependencies should be added to
 ## Development and Contribution
 
 This repository is configured for both human and automated
-contributors. Key documents:
-
-- `AGENTS.md` – Guidelines for agents working on this repo.  
-- `ROADMAP.md` – High-level roadmap and milestones.  
-- `OPEN-ISSUES.mg` – Known issues and improvement ideas.  
-- `REVIEW.md` – Code review checklist and expectations.  
-- `specs/` – Design contracts and detailed feature specs (including
-  the VLC backend spec).  
-- `CONTRACTS.md` – Overview of design and process contracts.
+contributors. Key documents (roadmaps, open-issues lists, agent guides,
+review checklists, and design specs) live alongside the source in the
+project root.
 
 ### Basic Workflow
 
-1. Open or create a spec in `specs/` for non-trivial changes.  
+1. Open or create a design spec for non-trivial changes.  
 2. Make code changes in `core/`, `ui/`, `metronome/` following
    existing patterns.  
 3. Run `make check` (docs, code, lint, tests) to validate changes.  
@@ -377,12 +357,13 @@ contributors. Key documents:
 
 ## Data and Safety Notes
 
-- `lessons.db` is important user data: avoid destructive changes or
-  schema modifications without a clear migration plan.  
-- Media files in `Downloads/` or other local folders are user-owned and
-  should not be deleted or moved automatically without confirmation.  
-- Logs (`bouzouki_player.log`) are helpful for debugging; rotation is
-  configured, but still be mindful of log volume.
+- The application's SQLite database is important user data: avoid
+  destructive changes or schema modifications without a clear
+  migration plan.  
+- Media files in user-owned folders are user-owned and should not be
+  deleted or moved automatically without confirmation.  
+- Logs are helpful for debugging; rotation is configured, but still be
+  mindful of log volume.
 
 ## License
 
