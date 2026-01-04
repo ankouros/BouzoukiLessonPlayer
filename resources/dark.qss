@@ -1,0 +1,112 @@
+/* GLOBAL DEFAULTS */
+* {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 10pt;
+}
+
+QWidget {
+    background-color: #232323;
+    color: #f0f0f0;
+    selection-background-color: #2a82da;
+    selection-color: #ffffff;
+}
+
+/* BUTTONS */
+QPushButton {
+    background-color: #3a3a3a;
+    border: 1px solid #5a5a5a;
+    padding: 6px 12px;
+    border-radius: 3px;
+}
+QPushButton:hover {
+    background-color: #4a4a4a;
+}
+QPushButton:pressed {
+    background-color: #2a82da;
+    border: 1px solid #2a82da;
+}
+
+/* LIST WIDGETS */
+QListWidget, QTreeView, QTableView, QPlainTextEdit, QTextEdit {
+    background-color: #2a2a2a;
+    border: 1px solid #3c3c3c;
+    alternate-background-color: #292929;
+    selection-background-color: #2a82da;
+    selection-color: white;
+}
+
+/* LINE EDITS / SEARCH */
+QLineEdit {
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    padding: 4px;
+    border-radius: 3px;
+    selection-background-color: #2a82da;
+    selection-color: #ffffff;
+}
+
+/* STATUS BAR */
+QStatusBar {
+    background-color: #1e1e1e;
+    border-top: 1px solid #444;
+}
+
+/* MENUBAR */
+QMenuBar {
+    background-color: #1e1e1e;
+}
+QMenuBar::item {
+    background-color: transparent;
+    padding: 5px 15px;
+}
+QMenuBar::item:selected {
+    background-color: #2a82da;
+}
+
+/* MENUS */
+QMenu {
+    background-color: #2a2a2a;
+    border: 1px solid #3a3a3a;
+}
+QMenu::item:selected {
+    background-color: #2a82da;
+    color: white;
+}
+
+/* SLIDERS */
+QSlider::groove:horizontal {
+    height: 6px;
+    background: #3c3c3c;
+}
+QSlider::handle:horizontal {
+    width: 12px;
+    background: #2a82da;
+    border: 1px solid #5a5a5a;
+    margin: -5px 0;
+    border-radius: 6px;
+}
+
+/* SCROLLBARS */
+QScrollBar:vertical, QScrollBar:horizontal {
+    background: #2a2a2a;
+    width: 10px;
+    margin: 0px;
+}
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+    background: #5a5a5a;
+    border-radius: 4px;
+}
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: none;
+}
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: none;
+}
+
+/* TOOLTIP */
+QToolTip {
+    background-color: #444444;
+    color: #f0f0f0;
+    border: 1px solid #666666;
+    padding: 4px;
+}

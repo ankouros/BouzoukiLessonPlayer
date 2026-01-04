@@ -1,0 +1,8 @@
+PyQt5>=5.15
+psutil>=5.9
+mutagen>=1.45
+qt-material>=2.14
+pytest>=7.0
+numpy>=1.24
+simpleaudio>=1.0
+python-vlc>=3.0

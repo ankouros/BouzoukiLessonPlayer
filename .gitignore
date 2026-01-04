@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs and debug
+*.log
+
+# SQLite / local databases
+*.sqlite3
+*.db
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+tags
+
+# PyQt / Qt
+*.pyc
+*.pyo
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Core dumps
+core
+
+# Zips / archives
+*.zip
+*.tar
+*.tar.gz
+

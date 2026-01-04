@@ -1,0 +1,23 @@
+/* system.qss — intentionally minimal to use native styling */
+
+* {
+    font-family: default;
+    font-size: 10pt;
+}
+
+QWidget {
+    background-color: none;
+    color: none;
+    selection-background-color: palette(highlight);
+    selection-color: palette(highlighted-text);
+}
+
+QPushButton, QLineEdit, QListWidget, QTextEdit, QPlainTextEdit,
+QMenu, QMenuBar, QSlider, QScrollBar, QToolTip {
+    all: unset;
+    background-color: none;
+    color: none;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}

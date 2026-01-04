@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Bouzouki Lesson Player
+Comment=Launch the Bouzouki Lesson Player App
+Exec=/home/aggelos/Desktop/BouzoukiLessonsPlayer/start.sh
+Icon=/home/aggelos/Desktop/BouzoukiLessonsPlayer/resources/bouzouki.png
+Terminal=false
+Categories=Education;Music;AudioVideo;

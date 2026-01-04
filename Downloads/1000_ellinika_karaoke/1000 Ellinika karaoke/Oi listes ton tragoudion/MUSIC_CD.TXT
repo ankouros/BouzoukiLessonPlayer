@@ -1,0 +1,56 @@
+Code CD Title                                         Descr Size
+
+1001 Turtle Tools for Multimedia                      CDROM  334
+1002 Sound Effects Library                            CDROM  249
+1003 Serious Sounds Vol.1                             CDROM  219
+1004 Professional Music Producer Ver.1.1              CDROM  243
+1005 16bit Sound Masterpiece                          CDROM  246
+1006 1000 Sound Effects                               CDROM  675
+1007 250 Music Clips                                  CDROM  472
+1008 Mega Rock Rap 'n' Roll                           CDROM   47
+1009 WAV Sound Effects                                CDROM  467
+1010 Sound Revue                                      CDROM  427
+1011 Soundtrack Express                               CDROM  128
+1012 Heart 20 Years of Rock 'n' Roll                  CDROM  660
+1013 Soundsations                                     CDROM  153
+1014 Sound WAV Vol. II                                CDROM  627
+1015 SFX on CD ROM Vol.1                              CDROM  334
+1016 Sound Library Pro                                CDROM  234
+1017 999+ WAV Files                                   CDROM  183
+1018 Creative Sounds                                  CDROM  101
+1019 Grooves                                          MIXED   59
+1020 The Sound Source                                 CDROM  368
+1021 Xplora 1 : Peter Gabriel's Secret World          CDROM  626
+1022 Hollywood Collection                             CDROM  522
+1023 Natural Sound Effects                            CDROM  639
+1024 Sound Factory Rap                                CDROM  482
+1025 Sound Factory II                                 CDROM  636
+1026 Ultrasound Power Patch CD ROM Vol.1              CDROM  105
+1027 Ultrasound Power Patch CD ROM Vol.2              CDROM  102
+1028 Bob Dylan Highway 61 Interactive                 MIXED  612
+1029 Record Producer                                  CDROM  190
+1030 Audio Tracks Ver.2                               CDROM  231
+1031 Prince Interactive                               CDROM  532
+1032 The Rolling Stones Stripped                      MIXED  645
+1033 Music Central '96                                CDROM  621
+1034 Herbie Interactive Right Type of Mood            CDROM  650
+1035 Zero G Datafile Vol.1                            CDROM  175
+1036 Zero G Datafile Vol.2                            CDROM  160
+1037 Zero G Datafile Vol.3                            CDROM  158
+1038 PC Dance Tools (WAV-SBK-Samplecell)              CDROM  635
+1039 Circle Elements (Intergalactic) (WAV-AIF)        CDROM  476
+1040 Circle Elements (Planet Earth) (WAV-AIF)         CDROM  605
+1041 World FX CD No.1 (House & Leisure) (WAV-AIF)     CDROM  512
+1042 World FX CD No.2 (Business & Transport)(WAV-AIF) CDROM  512
+1043 World FX CD No.3 (Animals & Nature) (WAV-AIF)    CDROM  514
+1044 World FX CD No.4 (Sci-Fi, Ethnic,Human)(WAV-AIF) CDROM  585
+1045 Phat 'n' Phunky CD No.1                          AUDIO     
+1046 Phat 'n' Phunky CD No.2                          AUDIO     
+1047 Loopism's Vol.1                                  AUDIO     
+1048 Loopism's Vol.2                                  AUDIO     
+1049 Loopism's Vol.3                                  AUDIO     
+1050 Mega Beats Collection                            AUDIO     
+1051 Bite Size Beats 'n' Samples 2                    AUDIO     
+1052 The Ultimate WAV CD Vol.1                        CDROM  670
+1053 The Ultimate AIF CD Vol.1                        CDROM  670
+1054 Audio Tool Files CD Vol.1 (SBK-PAT-AVR)          CDROM   35

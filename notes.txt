@@ -1,0 +1,7 @@
+
+def update_detail_view(app, item):
+    lesson_number = item.text().split(":")[0]
+    videos = fetch_videos(app.conn, lesson_number)
+    app.video_list.clear()
+    for file_name, _ in videos:
+        app.video_list.addItem(file_name)
