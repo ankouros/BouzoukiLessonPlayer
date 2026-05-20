@@ -2,10 +2,10 @@ import os
 from PyQt5.QtCore import Qt, QTimer, QSettings
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QStatusBar, QLabel,
+    QStatusBar, QLabel, QShortcut,
 )
 from PyQt5.QtMultimedia import QMediaPlayer
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QKeySequence
 
 from ui.menu_bar import create_menu_bar
 from ui.widgets.master_detail import init_master_detail
@@ -24,6 +24,8 @@ class LessonPlayerApp(QMainWindow):
         # Will be set by detail view if VLC backend is enabled
         self.vlc_player = None
         self.eq_profile_active = False
+        self._progress_bar_dragging = False
+        self._shortcuts = []
 
         self.setWindowTitle("Bouzouki Lesson Player")
         self.setGeometry(100, 100, 1200, 700)
@@ -75,6 +77,7 @@ class LessonPlayerApp(QMainWindow):
 
         master_detail_widget = init_master_detail(self)
         layout.addWidget(master_detail_widget)
+        self._install_shortcuts()
 
     def closeEvent(self, event):
         if self.conn:
@@ -150,8 +153,8 @@ class LessonPlayerApp(QMainWindow):
             self.show_feedback("Loop OFF")
 
     def handle_position_changed(self, pos: int):
-        # Update progress slider if present
-        if hasattr(self, "progress_bar"):
+        # Update progress slider if present and not user-dragging
+        if hasattr(self, "progress_bar") and not getattr(self, "_progress_bar_dragging", False):
             self.progress_bar.setValue(pos)
 
         # Apply loop logic when enabled
@@ -253,6 +256,28 @@ class LessonPlayerApp(QMainWindow):
 
         elif key == Qt.Key_Down:
             self.volume_down_small()
+
+    def _toggle_play_pause(self):
+        if not hasattr(self, "media_player"):
+            return
+        if self.media_player.state() == QMediaPlayer.PlayingState:
+            self.pause_video()
+        else:
+            self.play_video()
+
+    def _install_shortcuts(self):
+        shortcut_map = {
+            Qt.Key_Space: self._toggle_play_pause,
+            Qt.Key_Right: self.seek_forward_5s,
+            Qt.Key_Left: self.seek_back_5s,
+            Qt.Key_Up: self.volume_up_small,
+            Qt.Key_Down: self.volume_down_small,
+        }
+        for key, handler in shortcut_map.items():
+            shortcut = QShortcut(QKeySequence(key), self)
+            shortcut.setContext(Qt.ApplicationShortcut)
+            shortcut.activated.connect(handler)
+            self._shortcuts.append(shortcut)
 
     def _init_feedback_overlay(self):
         self.feedback_label = QLabel("", self)

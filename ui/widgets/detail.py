@@ -43,6 +43,7 @@ def create_detail_panel(app):
     app.right_panel_layout = layout
 
     splitter = QSplitter(Qt.Vertical)
+    splitter.setHandleWidth(4)
 
     video_container = QWidget()
     video_layout = QVBoxLayout(video_container)

@@ -25,6 +25,16 @@ def init_player_controls(app):
                 vlc_obj.set_position_ms(pos)
 
     app.progress_bar.sliderMoved.connect(_on_slider_moved)
+    def _start_slider_drag():
+        setattr(app, "_progress_bar_dragging", True)
+
+    def _end_slider_drag():
+        setattr(app, "_progress_bar_dragging", False)
+        if hasattr(app, "handle_position_changed") and hasattr(app, "media_player"):
+            app.handle_position_changed(app.media_player.position())
+
+    app.progress_bar.sliderPressed.connect(_start_slider_drag)
+    app.progress_bar.sliderReleased.connect(_end_slider_drag)
     if hasattr(app, "handle_position_changed"):
         app.media_player.positionChanged.connect(app.handle_position_changed)
     else:

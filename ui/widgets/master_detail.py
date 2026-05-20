@@ -9,6 +9,7 @@ from ui.widgets.detail import create_detail_panel
 
 def init_master_detail(app):
     splitter = QSplitter(Qt.Horizontal)
+    splitter.setHandleWidth(4)
 
     # Left Panel
     master_panel = create_master_panel(app)
